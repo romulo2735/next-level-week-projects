@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "7f97c785-e213-436c-a00e-a6c4af19dd4c",
+		"name": "Semana OnmiStack 11 - Be The Hero",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ongs",
+			"item": [
+				{
+					"name": "List all Ongs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_api}}/ongs",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"ongs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Ong",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ABCD\",\n\t\"email\": \"contato@ong.com.br\",\n\t\"whatsapp\": \"55+ 85 88993256\",\n\t\"city\": \"Fortaleza\",\n\t\"uf\": \"CE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/ongs",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"ongs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Incidents",
+			"item": [
+				{
+					"name": "List all Incidents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_api}}/incidents?page=2",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"incidents"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Incident",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "5f387a08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Incidente Y\",\n\t\"description\": \"Detalhes do incidente\",\n\t\"value\": \"100\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/incidents",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"incidents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Incident",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "5f387a08"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/incidents/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"incidents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "List incidents from ONG specific",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "5f387a08",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_api}}/profile",
+					"host": [
+						"{{url_api}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Session ONG",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "5f387a08"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5f387a08\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_api}}/sessions",
+					"host": [
+						"{{url_api}}"
+					],
+					"path": [
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4ad96a80-1337-44b4-a583-953b20db971a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9278aa05-8717-452c-b9a5-7671f9bb5d4e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "949bb295-5a08-4e98-bd38-8f06e2dc82db",
+			"key": "url_api",
+			"value": "http://localhost:3333",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
