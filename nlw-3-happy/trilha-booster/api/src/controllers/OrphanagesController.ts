@@ -1,6 +1,8 @@
 import {Request, Response} from "express";
 import {getRepository} from "typeorm";
 import Orphanages from "../models/Orphanages";
+import orphanageViews from "../views/orphanage_view";
+import * as Yup from "yup";
 
 export default {
 
@@ -11,9 +13,12 @@ export default {
      */
     async index(req: Request, res: Response) {
         const orphanagesRspository = getRepository(Orphanages);
-        const orphanages = await orphanagesRspository.find();
+        const orphanages = await orphanagesRspository.find({
+            // retornando com relacionamento
+            relations: ['images']
+        });
 
-        return res.status(200).json(orphanages);
+        return res.status(200).json(orphanageViews.index(orphanages));
     },
 
     /**
@@ -27,9 +32,12 @@ export default {
 
         const orphanagesRspository = getRepository(Orphanages);
         // pesquisa o orfanato pelo id passado.
-        const orphanage = await orphanagesRspository.findOneOrFail(id);
+        const orphanage = await orphanagesRspository.findOneOrFail(id, {
+            // retornando com relacionamento
+            relations: ['images']
+        });
 
-        return res.status(200).json(orphanage);
+        return res.status(200).json(orphanageViews.show(orphanage));
     },
 
     /**
@@ -48,11 +56,26 @@ export default {
             return {path: image.filename}
         });
 
-        // cria a base da entidade.
-        const orphanage = orphanagesRspository.create({
-            name, latitude, longitude, about, instructions, opening_hours, open_on_weekends, images
+        // validação de dados.
+        const data = {name, latitude, longitude, about, instructions, opening_hours, open_on_weekends, images};
+        const validations = Yup.object().shape({
+            name: Yup.string().required(),
+            latitude: Yup.number().required(),
+            longitude: Yup.number().required(),
+            about: Yup.string().required().max(300),
+            instructions: Yup.string().required(),
+            opening_hours: Yup.string().required(),
+            open_on_weekends: Yup.boolean().required(),
+            images: Yup.array(
+                Yup.object().shape({
+                    path: Yup.string().required()
+                })),
         });
 
+        await validations.validate(data, {abortEarly: false})
+
+        // cria a base da entidade.
+        const orphanage = orphanagesRspository.create(data);
         // cadastrar os dados.
         await orphanagesRspository.save(orphanage);
 
