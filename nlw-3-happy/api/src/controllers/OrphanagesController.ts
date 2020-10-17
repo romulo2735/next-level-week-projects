@@ -39,10 +39,18 @@ export default {
         const {name, latitude, longitude, about, instructions, opening_hours, open_on_weekends} = req.body;
         const orphanagesRspository = getRepository(Orphanages);
 
+        // inserindo o tipo de dado que as imagens iram vir, como array[]
+        const reqImages = req.files as Express.Multer.File[];
+        // percorredo todas as imagens enviadas.
+        const images = reqImages.map(image => {
+            return {path: image.filename}
+        });
+
         // cria a base da entidade.
         const orphanage = orphanagesRspository.create({
-            name, latitude, longitude, about, instructions, opening_hours, open_on_weekends
+            name, latitude, longitude, about, instructions, opening_hours, open_on_weekends, images
         });
+
         // cadastrar os dados.
         await orphanagesRspository.save(orphanage);
 
