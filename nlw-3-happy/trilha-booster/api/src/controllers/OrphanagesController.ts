@@ -22,9 +22,11 @@ export default {
      * @param res
      */
     async show(req: Request, res: Response) {
+        // recebe o paramtro enviado.
         const {id} = req.params;
 
         const orphanagesRspository = getRepository(Orphanages);
+        // pesquisa o orfanato pelo id passado.
         const orphanage = await orphanagesRspository.findOneOrFail(id);
 
         return res.status(200).json(orphanage);
@@ -41,7 +43,7 @@ export default {
 
         // inserindo o tipo de dado que as imagens iram vir, como array[]
         const reqImages = req.files as Express.Multer.File[];
-        // percorredo todas as imagens enviadas.
+        // percorredo todas as image(ns) enviadas.
         const images = reqImages.map(image => {
             return {path: image.filename}
         });
