@@ -1,7 +1,7 @@
 interface OrphanageInterface {
     id: number;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     name: string;
     description: string;
     about: string;
