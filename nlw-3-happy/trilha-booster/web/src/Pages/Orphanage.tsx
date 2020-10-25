@@ -19,6 +19,7 @@ interface OrphanageParams {
 export default function Orphanage() {
     const params = useParams<OrphanageParams>();
     const [orphanage, setOrphanage] = useState<OrphanageInterface>();
+    const [activeImage, setActiveImage] = useState(0);
 
     useEffect(() => {
         service.get(`orphanages/${params.id}`).then(res => {
@@ -26,17 +27,26 @@ export default function Orphanage() {
         });
     }, [params.id]);
 
+    if (!orphanage) {
+        return <p>Carregando... </p>
+    }
+
     return (
         <div id="page-orphanage">
             <Sidebar/>
             <main>
                 <div className="orphanage-details">
-                    <img src={orphanage.images[0].url} alt={orphanage.name}/>
+                    <img src={orphanage.images[activeImage].url} alt={orphanage.name}/>
 
                     <div className="images">
-                        {orphanage.images.map(image => {
+                        {orphanage.images.map((image, index) => {
                             return (
-                                <button key={image.id} className="active" type="button">
+                                <button
+                                    type="button"
+                                    key={image.id}
+                                    className={activeImage === index ? 'active': ''}
+                                    onClick={() => {setActiveImage(index)}}
+                                >
                                     <img src={image.url} alt={orphanage.name}/>
                                 </button>
                             );
@@ -66,7 +76,7 @@ export default function Orphanage() {
                             </Map>
 
                             <footer>
-                                <a href="">Ver rotas no Google Maps</a>
+                                <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage.latitude},${orphanage.longitude}`}>Ver rotas no Google Maps</a>
                             </footer>
                         </div>
 

@@ -3,7 +3,7 @@ interface OrphanageInterface {
     latitude: number;
     longitude: number;
     name: string;
-    description: string;
+    instructions: string;
     about: string;
     opening_hours: string
     open_on_weekends: string;
