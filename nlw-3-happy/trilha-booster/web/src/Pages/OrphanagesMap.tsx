@@ -33,9 +33,7 @@ function OrphanagesMap() {
                 </footer>
             </aside>
             <Map center={[-3.7906755, -38.537535]} zoom={15} style={{width: '100%', height: '100%'}}>
-                <TileLayer
-                    url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}/>
-
+                <TileLayer url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}/>
                 {orphanages.map(orphange => {
                     return (
                         <Marker key={orphange.id} icon={mapIcon} position={[orphange.latitude, orphange.longitude]}>
